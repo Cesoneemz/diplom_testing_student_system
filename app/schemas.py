@@ -39,3 +39,37 @@ class UserCreate(UserBase):
 
 class UserRead(UserBase):
     id: UUID  # используем UUID вместо int
+
+
+class TestBase(SQLModel):
+    title: str
+
+
+class TestCreate(TestBase):
+    pass  # author_id будет устанавливаться из авторизованного пользователя
+
+
+class TestRead(TestBase):
+    id: UUID
+    author_id: UUID
+
+
+class TestUpdate(SQLModel):
+    title: Optional[str] = None
+
+
+class QuestionBase(SQLModel):
+    text: str
+    test_id: UUID
+
+
+class QuestionCreate(QuestionBase):
+    pass
+
+
+class QuestionRead(QuestionBase):
+    id: UUID
+
+
+class QuestionUpdate(SQLModel):
+    text: Optional[str] = None

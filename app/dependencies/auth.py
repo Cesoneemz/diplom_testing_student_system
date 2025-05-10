@@ -28,7 +28,7 @@ async def get_current_user(
     if user is None:
         raise HTTPException(
             status_code=HTTP_401_UNAUTHORIZED,
-            detail="Пользователь, связанный с токеном, не найден"
+            detail="Неавторизован"
         )
 
     return user
