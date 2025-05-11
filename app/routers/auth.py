@@ -34,7 +34,7 @@ async def register_user(
     username = generate_username(user_data.first_name, user_data.middle_name, user_data.last_name)
 
     stmt = select(User).where((User.email == user_data.email) | (User.username == username))
-    result = await session.execute(stmt)
+    result = await session.execute(statement=stmt)
     if result.scalar_one_or_none():
         raise HTTPException(status_code=400, detail="Пользователь уже существует")
 
@@ -64,7 +64,6 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), session: Async
 
 @router.get("/me", response_model=UserRead)
 async def read_current_user(request: Request, token: Annotated[str, Depends(oauth2_scheme)], session: AsyncSession = Depends(db_helper.session_getter)):
-    print(token)
     stmt = select(Token).where(Token.id == token)
     result = await session.execute(stmt)
     token = result.scalar_one_or_none()

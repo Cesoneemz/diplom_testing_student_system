@@ -1,15 +1,23 @@
-from typing import Optional
+from typing import Optional, List
 from uuid import UUID
-from sqlmodel import SQLModel
 from enum import Enum
-from pydantic import validator, EmailStr
+from sqlmodel import SQLModel
+from pydantic import EmailStr, BaseModel, field_validator
 
+
+# -------------------------
+# ENUM'ы
+# -------------------------
 
 class Role(str, Enum):
     admin = "admin"
     teacher = "teacher"
     student = "student"
 
+
+# -------------------------
+# USER
+# -------------------------
 
 class UserBase(SQLModel):
     email: EmailStr
@@ -18,8 +26,9 @@ class UserBase(SQLModel):
     last_name: str
     role: Role = Role.student
 
-    @validator("first_name", "middle_name", "last_name")
-    def validate_name(cls, value: str) -> str:
+    @field_validator("first_name", "middle_name", "last_name", mode="before")
+    @classmethod
+    def validate_name(cls, value: Optional[str]) -> Optional[str]:
         """Приводим имя, отчество и фамилию к правильному формату"""
         if value is None:
             return None
@@ -29,7 +38,8 @@ class UserBase(SQLModel):
 class UserCreate(UserBase):
     password: str  # plain password, будет хэшироваться
 
-    @validator("password")
+    @field_validator("password")
+    @classmethod
     def validate_password(cls, password: str) -> str:
         """Валидация пароля"""
         if len(password) < 8:
@@ -38,15 +48,19 @@ class UserCreate(UserBase):
 
 
 class UserRead(UserBase):
-    id: UUID  # используем UUID вместо int
+    id: UUID
 
+
+# -------------------------
+# TEST
+# -------------------------
 
 class TestBase(SQLModel):
     title: str
 
 
 class TestCreate(TestBase):
-    pass  # author_id будет устанавливаться из авторизованного пользователя
+    pass
 
 
 class TestRead(TestBase):
@@ -57,6 +71,14 @@ class TestRead(TestBase):
 class TestUpdate(SQLModel):
     title: Optional[str] = None
 
+
+class TestReadFull(TestRead):
+    questions: List["QuestionRead"]
+
+
+# -------------------------
+# QUESTION
+# -------------------------
 
 class QuestionBase(SQLModel):
     text: str
@@ -69,7 +91,79 @@ class QuestionCreate(QuestionBase):
 
 class QuestionRead(QuestionBase):
     id: UUID
+    answers: List["AnswerRead"]
 
 
 class QuestionUpdate(SQLModel):
     text: Optional[str] = None
+
+
+# -------------------------
+# ANSWER
+# -------------------------
+
+class AnswerBase(SQLModel):
+    question_id: UUID
+    text: str
+    is_correct: bool = False
+
+
+class AnswerCreate(AnswerBase):
+    pass
+
+
+class AnswerRead(AnswerBase):
+    id: UUID
+
+
+# -------------------------
+# RESULT
+# -------------------------
+
+class ResultBase(SQLModel):
+    student_id: UUID
+    test_id: UUID
+    score: int
+
+
+class ResultCreate(ResultBase):
+    pass
+
+
+class ResultRead(BaseModel):
+    id: UUID
+    test_id: UUID
+    student_id: UUID
+    score: int
+
+
+# -------------------------
+# SUBMISSION
+# -------------------------
+
+class AnswerSubmission(BaseModel):
+    question_id: UUID
+    answer_id: UUID
+
+class TestSubmission(BaseModel):
+    answers: List[AnswerSubmission]
+
+
+# -------------------------
+# СОЗДАНИЕ ТЕСТА С ВОПРОСАМИ И ОТВЕТАМИ
+# -------------------------
+
+class AnswerNestedCreate(BaseModel):
+    text: str
+    is_correct: bool = False
+
+
+class QuestionNestedCreate(BaseModel):
+    text: str
+    answers: List[AnswerNestedCreate]
+
+
+class TestCreateFull(SQLModel):
+    title: str
+    questions: List[QuestionNestedCreate]
+

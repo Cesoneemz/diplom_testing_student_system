@@ -5,8 +5,7 @@ from sqlmodel import select
 from app.database import db_helper
 from app.models import Question, Test, User
 from app.schemas import QuestionCreate, QuestionRead, QuestionUpdate
-from app.security import oauth2_scheme
-from app.dependencies import get_current_user
+from app.dependencies.auth import get_current_user
 
 router = APIRouter(prefix="/questions", tags=["Questions"])
 

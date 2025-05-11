@@ -1,6 +1,6 @@
 from typing import Optional
 
-from datetime import datetime
+from datetime import datetime, timezone
 from passlib.context import CryptContext
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlalchemy import select
@@ -31,7 +31,7 @@ async def authenticate_user(session: AsyncSession, username: str, password: str)
 async def create_token_for_user(session: AsyncSession, user: User) -> Token:
     token = Token(
         user_id=user.id,
-        expires_at=datetime.utcnow() + settings.access_token.expires_delta,
+        expires_at=datetime.now(timezone.utc) + settings.access_token.expires_delta,
     )
     session.add(token)
     await session.commit()

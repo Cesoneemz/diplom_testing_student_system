@@ -1,7 +1,4 @@
-# app/utils.py
-import re
-
-def generate_username(first_name: str, middle_name: str, last_name: str) -> str:
+def generate_username(first_name: str, middle_name: str | None, last_name: str) -> str:
     # Преобразуем имя, отчество и фамилию в латиницу (если они не латиницей).
     # Для простоты предполагаем, что ФИО введены на кириллице и их нужно транслитерировать.
     
@@ -14,7 +11,10 @@ def generate_username(first_name: str, middle_name: str, last_name: str) -> str:
         return ''.join(translit_dict.get(c, c) for c in text.lower())
 
     # Получаем первые две буквы имени и отчества
-    first_initials = transliterate(first_name[:1]) + transliterate(middle_name[:1])
+    if middle_name:
+        first_initials = transliterate(first_name[:1]) + transliterate(middle_name[:1])
+    else:
+        first_initials = transliterate(first_name[:1]) + transliterate(first_name[:1])
     # Транслитерируем фамилию полностью
     last_name_transliterated = transliterate(last_name)
     
