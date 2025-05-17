@@ -135,6 +135,7 @@ class ResultRead(BaseModel):
     test_id: UUID
     student_id: UUID
     score: int
+    test_title: str
 
 
 # -------------------------

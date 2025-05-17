@@ -1,7 +1,10 @@
+from __future__ import annotations as _annotations
+
 import uvicorn
 import logging
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 from sqlalchemy import text
@@ -14,9 +17,6 @@ from app.routers.result import router as result_router
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-
-app = FastAPI()
-
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
@@ -34,6 +34,15 @@ app = FastAPI(lifespan=lifespan, debug=True)
 app.include_router(auth_router, prefix="/auth")
 app.include_router(tests_router, prefix="/tests")
 app.include_router(result_router, prefix="/results")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # твой фронтенд
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 if __name__ == "__main__":
     uvicorn.run(

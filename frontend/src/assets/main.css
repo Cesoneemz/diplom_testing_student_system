@@ -1,0 +1,62 @@
+@import './base.css';
+
+:root {
+  --color-primary: hsla(160, 100%, 37%, 1);
+  --color-primary-light: hsla(160, 100%, 37%, 0.2);
+  --max-width: 1280px;
+  --padding-base: 2rem;
+  --padding-small: 0.3rem;
+  --font-weight-normal: 400;
+}
+
+/* Основной контейнер */
+#app {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--padding-base);
+  font-weight: var(--font-weight-normal);
+  box-sizing: border-box;
+}
+
+/* Ссылки и зелёные элементы */
+a,
+.green {
+  text-decoration: none;
+  color: var(--color-primary);
+  transition: background-color 0.4s ease, color 0.4s ease;
+  padding: var(--padding-small);
+  outline-offset: 2px;
+  outline: none;
+  border-radius: 4px;
+}
+
+/* Фокус на ссылках для доступности */
+a:focus-visible {
+  outline: 2px solid var(--color-primary);
+  background-color: var(--color-primary-light);
+}
+
+/* Наведение только там, где есть мышь */
+@media (hover: hover) and (pointer: fine) {
+  a:hover {
+    background-color: var(--color-primary-light);
+  }
+}
+
+/* Адаптивность для больших экранов */
+@media (min-width: 1024px) {
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+  }
+
+  #app {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding: 0 2rem;
+  }
+}
