@@ -58,21 +58,21 @@ export default {
 
 <style scoped>
 .tests-container {
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 1.5rem;
+  max-width: 680px;
+  margin: 3rem auto;
+  padding: 2rem 2.5rem;
   background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+  border-radius: 14px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .tests-title,
 .results-title {
-  margin-bottom: 1.5rem;
-  font-size: 1.75rem;
+  margin-bottom: 1.8rem;
+  font-size: 1.9rem;
   font-weight: 700;
-  color: #222222;
+  color: #1f1f1f;
   text-align: center;
 }
 
@@ -85,23 +85,45 @@ export default {
 
 .test-item,
 .result-item {
-  padding: 0.8rem 1rem;
-  margin-bottom: 0.75rem;
-  background-color: #f5f7fa;
-  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.85rem;
+  background-color: #f6f9fc;
+  border: 1px solid #d9e2ec;
+  border-radius: 10px;
   font-size: 1.1rem;
-  color: #333333;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+  color: #2d2d2d;
+  transition: all 0.25s ease;
 }
 
 .test-item:hover {
-  background-color: #e0e7ff;
+  background-color: #e3ecff;
+  border-color: #b0c4ff;
+}
+
+.result-item {
+  background-color: #f9f9f9;
+  border: 1px solid #eeeeee;
+}
+
+.result-item:hover {
+  background-color: #f1f5ff;
+}
+
+.test-item a {
+  text-decoration: none;
+  color: #1a73e8;
+  font-weight: 600;
+}
+
+.test-item a:hover {
+  text-decoration: underline;
 }
 
 .error {
-  color: red;
+  color: #d93025;
   text-align: center;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
+  font-size: 1rem;
 }
+
 </style>

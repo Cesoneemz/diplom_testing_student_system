@@ -54,7 +54,7 @@ export default {
 
         const res = await axios.post('http://localhost:8000/auth/login', params)
 
-        this.authStore.setToken(res.data.access_token)
+        this.authStore.setUser(res.data.access_token, res.data.user_role)
         this.$router.push('/')
       } catch (err) {
         this.error = 'Ошибка входа: ' + (err.response?.data?.detail || err.message)
@@ -68,7 +68,7 @@ export default {
 .login-container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  padding-top: 6vh;
   min-height: 100vh;
   background-color: #f9f9f9;
 }
@@ -79,7 +79,7 @@ export default {
   border-radius: 12px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
   width: 100%;
-  max-width: 400px;
+  max-width: 480px;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -131,4 +131,5 @@ export default {
   font-size: 0.95rem;
   text-align: center;
 }
+
 </style>

@@ -52,8 +52,19 @@ async def create_test(
             session.add(answer)
 
     await session.commit()
-    await session.refresh(new_test)
-    return new_test
+
+    # Перезапрашиваем тест с вопросами и ответами через eager loading
+    statement = (
+        select(Test)
+        .where(Test.id == new_test.id)
+        .options(
+            selectinload(Test.questions).selectinload(Question.answers)
+        )
+    )
+    result = await session.execute(statement)
+    test_with_relations = result.scalars().first()
+
+    return test_with_relations
 
 
 # ---------------------------
@@ -244,5 +255,14 @@ async def submit_test(
     session.add(result)
     await session.commit()
     await session.refresh(result)
-    return result
+
+    result_read = ResultRead(
+        id=result.id,
+        student_id=result.student_id,
+        test_id=result.test_id,
+        score=result.score,
+        test_title=None
+    )
+
+    return result_read
 

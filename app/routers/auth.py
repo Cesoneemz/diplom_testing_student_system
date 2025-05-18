@@ -59,7 +59,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), session: Async
         raise HTTPException(status_code=401, detail="Неверные учётные данные")
 
     token = await create_token_for_user(session, user)
-    return {"access_token": str(token.id), "token_type": "bearer"}
+    return {"access_token": str(token.id), "token_type": "bearer", "user_role": user.role}
 
 
 @router.get("/me", response_model=UserRead)

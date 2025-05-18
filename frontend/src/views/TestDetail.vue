@@ -97,78 +97,109 @@ export default {
 </script>
 
 <style scoped>
-body {
-  background-color: #121212;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #e5e5e5;
-  margin: 0;
-  padding: 0;
-}
-
-.tests-container {
-  max-width: 600px;
+.test-detail-container {
+  max-width: 720px;
   margin: 4rem auto;
   padding: 2.5rem;
-  background: linear-gradient(145deg, #1e1e1e, #1a1a1a);
+  background-color: #ffffff;
   border-radius: 20px;
-  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.4);
-  color: #ffffff;
-  transition: transform 0.3s ease;
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.45);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #f0f0f0;
 }
 
-.tests-container:hover {
-  transform: scale(1.01);
-}
-
-.tests-title,
-.results-title {
+.test-detail-container h2 {
   font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 1.8rem;
-  text-align: center;
-  color: #ffffff;
-}
-
-.tests-list,
-.results-list {
-  list-style: none;
-  padding: 0;
+  font-weight: 700;
   margin-bottom: 2rem;
+  text-align: center;
+  color: black;
 }
 
-.test-item,
-.result-item {
-  padding: 1rem 1.2rem;
+.question-block {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background-color: #f6f9fc;
+  border-radius: 14px;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3);
+}
+
+.question-block p {
   margin-bottom: 1rem;
-  background-color: #2a2a2a;
-  border-radius: 12px;
-  font-size: 1.1rem;
-  color: #dddddd;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: black;
+}
+
+.question-block ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.question-block li {
+  margin-bottom: 0.8rem;
+}
+
+.question-block label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.05rem;
+  color: black;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.question-block input[type="radio"] {
+  accent-color: #40f0a8;
+  transform: scale(1.1);
   cursor: pointer;
 }
 
-.test-item:hover,
-.result-item:hover {
-  background-color: #3a3a3a;
+button {
+  display: block;
+  width: 100%;
+  margin-top: 2rem;
+  padding: 0.9rem;
+  background-color: #40f0a8;
+  color: #0d0d0d;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #34d29c;
   transform: translateY(-2px);
 }
 
-.test-item a {
-  color: #40f0a8;
-  font-weight: 600;
-  text-decoration: none;
+button:disabled {
+  background-color: #888888;
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
-.test-item a:hover {
-  text-decoration: underline;
+.result {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #ffffff;
+  border: 1px solid #5a5a5a;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #90f3c5;
+  text-align: center;
 }
 
 .error {
   text-align: center;
   color: #ff4f4f;
   font-weight: 600;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   font-size: 1rem;
 }
+
 </style>
